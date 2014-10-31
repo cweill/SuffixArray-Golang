@@ -9,6 +9,73 @@ import (
 )
 
 var _ = Describe("suffixarrayx", func() {
+	/*  ABRACADABRA!
+	 *    i ind lcp rnk  select
+	 *  ---------------------------
+	 *    0  11   -   0  !
+	 *    1  10   0   1  A!
+	 *    2   7   1   2  ABRA!
+	 *    3   0   4   3  ABRACADABRA!
+	 *    4   3   1   4  ACADABRA!
+	 *    5   5   1   5  ADABRA!
+	 *    6   8   0   6  BRA!
+	 *    7   1   3   7  BRACADABRA!
+	 *    8   4   0   8  CADABRA!
+	 *    9   6   0   9  DABRA!
+	 *   10   9   0  10  RA!
+	 *   11   2   2  11  RACADABRA!
+	 */
+
+	Describe("ABRACADABRA!", func() {
+		var (
+			ind []int
+			lcp []int
+			rnk []int
+			sel []string
+		)
+		sa := NewSuffixArrayX("ABRACADABRA!")
+
+		BeforeEach(func() {
+			ind = []int{11, 10, 7, 0, 3, 5, 8, 1, 4, 6, 9, 2}
+			lcp = []int{0, 0, 1, 4, 1, 1, 0, 3, 0, 0, 0, 2}
+			rnk = []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}
+			sel = []string{"!", "A!", "ABRA!", "ABRACADABRA!", "ACADABRA!", "ADABRA!",
+				"BRA!", "BRACADABRA!", "CADABRA!", "DABRA!", "RA!", "RACADABRA!"}
+		})
+
+		Describe("Index", func() {
+			It("is correct", func() {
+				for i := 0; i < 12; i++ {
+					Expect(sa.Index(i)).To(Equal(ind[i]))
+				}
+			})
+		})
+
+		Describe("LongestCommonPrefix", func() {
+			It("is correct", func() {
+				for i := 1; i < 12; i++ {
+					Expect(sa.LongestCommonPrefix(i)).To(Equal(lcp[i]))
+				}
+			})
+		})
+
+		Describe("Rank", func() {
+			It("is correct", func() {
+				for i := 0; i < 12; i++ {
+					Expect(sa.Rank(sel[i])).To(Equal(rnk[i]))
+				}
+			})
+		})
+
+		Describe("Select", func() {
+			It("is correct", func() {
+				for i := 0; i < 12; i++ {
+					Expect(sa.Select(i)).To(Equal(sel[i]))
+				}
+			})
+		})
+	})
+
 	Describe("LongestRepeatingSubstring", func() {
 		It("is `` for ``", func() {
 			sa := NewSuffixArrayX("")

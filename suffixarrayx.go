@@ -39,12 +39,12 @@ type suffixarrayx struct {
 
 // Constructor
 func NewSuffixArrayX(str string) *suffixarrayx {
-	str = str + "\n"
 	sa := new(suffixarrayx)
+	sa.n = len(str)
+	str = str + "\n"
 	sa.CUTOFF = 5
 	sa.text = []rune(str)
-	sa.n = len(str)
-	sa.index = make([]int, len(str))
+	sa.index = make([]int, sa.n)
 
 	for i := 0; i < sa.n; i++ {
 		sa.index[i] = i
@@ -163,7 +163,7 @@ func (sa *suffixarrayx) lcp(i, j int) int {
  * @return the <em>i</em> smallest suffix as a string
  */
 func (sa *suffixarrayx) Select(i int) string {
-	return string(sa.text[sa.index[i] : sa.n-sa.index[i]])
+	return string(sa.text[sa.index[i]:sa.n])
 }
 
 /**
@@ -195,7 +195,9 @@ func (sa *suffixarrayx) compare(query string, i int) int {
 	m := len(query)
 	j := 0
 	for i < sa.n && j < m {
-		return int(queryRunes[j]) - int(sa.text[i])
+		if queryRunes[j] != sa.text[i] {
+			return int(queryRunes[j]) - int(sa.text[i])
+		}
 		i++
 		j++
 	}
