@@ -26,6 +26,10 @@
 
 package suffixarrayx
 
+import (
+	"strings"
+)
+
 type suffixarrayx struct {
 	CUTOFF int
 	text   []rune
@@ -216,15 +220,17 @@ func (sa *suffixarrayx) LongestRepeatingSubstring() string {
 }
 
 func (sa *suffixarrayx) LongestRepeatingNonOverlappingSubstring() string {
+	text := string(sa.text)
 	lrs := sa.LongestRepeatingSubstring()
 	lrnos := lrs
 	for len(lrs) > 0 {
 		sa2 := NewSuffixArrayX(string(lrnos))
 		lrs = sa2.LongestRepeatingSubstring()
-		if lrs != lrnos[len(lrnos)-len(lrs):] {
+		newSubstr := lrnos[0 : len(lrnos)-len(lrs)]
+		if lrs != lrnos[len(lrnos)-len(lrs):] || !strings.Contains(text, newSubstr+newSubstr) {
 			break
 		}
-		lrnos = lrnos[0 : len(lrnos)-len(lrs)]
+		lrnos = newSubstr
 	}
 	return lrnos
 }

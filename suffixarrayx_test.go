@@ -89,9 +89,24 @@ var _ = Describe("suffixarrayx", func() {
 			Expect(sa.LongestRepeatingNonOverlappingSubstring()).To(Equal("142857"))
 		})
 
+		It("is `010989` for `0.0109890109890109890`", func() {
+			sa := NewSuffixArrayX("0.0109890109890109890")
+			Expect(sa.LongestRepeatingNonOverlappingSubstring()).To(Equal("010989"))
+		})
+
 		It("is `` for `0123456789`", func() {
 			sa := NewSuffixArrayX("0123456789")
 			Expect(sa.LongestRepeatingNonOverlappingSubstring()).To(Equal(""))
+		})
+
+		It("is `ATGT` for `ATGTATGT`", func() {
+			sa := NewSuffixArrayX("ATGTATGT")
+			Expect(sa.LongestRepeatingNonOverlappingSubstring()).To(Equal("ATGT"))
+		})
+
+		It("is `ATTCCCGTT` for `ATTGTTCCCATTGTT`", func() {
+			sa := NewSuffixArrayX("ATTGTTCCCATTGTT")
+			Expect(sa.LongestRepeatingNonOverlappingSubstring()).To(Equal("ATTGTT"))
 		})
 
 		It("is `,- Such a funny, sporty, gamy, jesty, joky, hoky-poky lad, is the Ocean, oh! Th` for Moby Dick", func() {
