@@ -4,7 +4,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"io/ioutil"
-	"strings"
+	"regexp"
 	. "suffixarrayx"
 )
 
@@ -18,6 +18,11 @@ var _ = Describe("suffixarrayx", func() {
 		It("is `` for `0123456789`", func() {
 			sa := NewSuffixArrayX("0123456789")
 			Expect(sa.LongestRepeatingSubstring()).To(Equal(""))
+		})
+
+		It("is `ana` for `banana`", func() {
+			sa := NewSuffixArrayX("banana")
+			Expect(sa.LongestRepeatingSubstring()).To(Equal("ana"))
 		})
 
 		It("is `a` for `aa`", func() {
@@ -45,27 +50,33 @@ var _ = Describe("suffixarrayx", func() {
 			if err != nil {
 				//Should throw exception
 			}
-			contentString := strings.Replace(string(content), "\n", " ", -1)
+			re := regexp.MustCompile("\\s+")
+			contentString := re.ReplaceAllString(string(content), " ")
 			sa := NewSuffixArrayX(contentString)
 			Expect(sa.LongestRepeatingSubstring()).To(Equal("st of times it was the "))
 		})
 
-		// This is a really long test. Should take about 30 minutes to finish
-		//
-		// It("is `,- Such a funny, sporty, gamy, jesty, joky, hoky-poky lad, is the Ocean, oh! Th` for Moby Dick", func() {
-		// 	content, err := ioutil.ReadFile("mobydick.txt")
-		// 	if err != nil {
-		// 		//Should throw exception
-		// 	}
-		// 	sa := NewSuffixArrayX(strings.Replace(string(content), "\n", " ", -1))
-		// 	Expect(sa.LongestRepeatingSubstring()).To(Equal(",- Such a funny, sporty, gamy, jesty, joky, hoky-poky lad, is the Ocean, oh! Th"))
-		// })
+		It("is `,- Such a funny, sporty, gamy, jesty, joky, hoky-poky lad, is the Ocean, oh! Th` for Moby Dick", func() {
+			content, err := ioutil.ReadFile("mobydick.txt")
+			if err != nil {
+				//Should throw exception
+			}
+			re := regexp.MustCompile("\\s+")
+			contentString := re.ReplaceAllString(string(content), " ")
+			sa := NewSuffixArrayX(contentString)
+			Expect(sa.LongestRepeatingSubstring()).To(Equal(",- Such a funny, sporty, gamy, jesty, joky, hoky-poky lad, is the Ocean, oh! Th"))
+		})
 	})
 
 	Describe("LongestRepeatingNonOverlappingSubstring", func() {
 		It("is `a` for `aaaaaaaaa`", func() {
 			sa := NewSuffixArrayX("aaaaaaaaa")
 			Expect(sa.LongestRepeatingNonOverlappingSubstring()).To(Equal("a"))
+		})
+
+		It("is `ana` for `banana`", func() {
+			sa := NewSuffixArrayX("banana")
+			Expect(sa.LongestRepeatingNonOverlappingSubstring()).To(Equal("an"))
 		})
 
 		It("is `01` for `0101010101010101010101`", func() {
