@@ -35,6 +35,7 @@ type suffixarrayx struct {
 
 // Constructor
 func NewSuffixArrayX(str string) *suffixarrayx {
+	str = str + "\n"
 	sa := new(suffixarrayx)
 	sa.CUTOFF = 5
 	sa.text = []rune(str)
@@ -56,13 +57,10 @@ func (sa *suffixarrayx) sort(lo, hi, d int) {
 		sa.insertion(lo, hi, d)
 		return
 	}
-	if sa.index[lo]+d >= sa.n {
-		return
-	}
 	lt, gt := lo, hi
 	v := sa.text[sa.index[lo]+d]
 	i := lo + 1
-	for i+d <= gt && sa.index[i]+d < sa.n {
+	for i <= gt {
 		t := sa.text[sa.index[i]+d]
 		if t < v {
 			sa.exch(lt, i)
