@@ -221,6 +221,9 @@ func (sa *suffixarrayx) LongestRepeatingNonOverlappingSubstring() string {
 	for len(lrs) > 0 {
 		sa2 := NewSuffixArrayX(string(lrnos))
 		lrs = sa2.LongestRepeatingSubstring()
+		if lrs != lrnos[len(lrnos)-len(lrs):] {
+			break
+		}
 		lrnos = lrnos[0 : len(lrnos)-len(lrs)]
 	}
 	return lrnos

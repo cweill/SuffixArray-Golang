@@ -93,5 +93,16 @@ var _ = Describe("suffixarrayx", func() {
 			sa := NewSuffixArrayX("0123456789")
 			Expect(sa.LongestRepeatingNonOverlappingSubstring()).To(Equal(""))
 		})
+
+		It("is `,- Such a funny, sporty, gamy, jesty, joky, hoky-poky lad, is the Ocean, oh! Th` for Moby Dick", func() {
+			content, err := ioutil.ReadFile("mobydick.txt")
+			if err != nil {
+				//Should throw exception
+			}
+			re := regexp.MustCompile("\\s+")
+			contentString := re.ReplaceAllString(string(content), " ")
+			sa := NewSuffixArrayX(contentString)
+			Expect(sa.LongestRepeatingNonOverlappingSubstring()).To(Equal(",- Such a funny, sporty, gamy, jesty, joky, hoky-poky lad, is the Ocean, oh! Th"))
+		})
 	})
 })
