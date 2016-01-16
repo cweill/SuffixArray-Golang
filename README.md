@@ -1,4 +1,4 @@
-SuffixArray-Golang-LCP-LRS
+SuffixArray-Golang
 =========================
 
 A replacement for the regular suffix array packaged with Go. It computes the longest repeated substring (non-overlapping too).
