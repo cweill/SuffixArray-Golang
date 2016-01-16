@@ -10,4 +10,6 @@ The test suite is written in ginkgo. To run the tests you'll first need to run:
 $ go get github.com/onsi/ginkgo/ginkgo
 $ go get github.com/onsi/gomega
 ```
-No licence until I get the original author's approval. Until then, this is code only available for academic purposes.
+## License
+
+SuffixArray-Golang is released under the [MIT License](http://www.opensource.org/licenses/MIT).
